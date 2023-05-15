@@ -3,18 +3,19 @@ import { useMemo } from 'react'
 
 interface Props {
     name: string
-    purchaseValue: number
-    saleValue: number
+    purchaseValue: string
+    saleValue: string
+    variation: string
 }
 
-export const DolarType: React.FC = ({ name, purchaseValue, saleValue }: Props) => {
+export const DolarType: React.FC = ({ name, purchaseValue, saleValue, variation }: Props) => {
     const theme = useColorScheme()
     const purchaseValueRefactored = parseFloat(purchaseValue.replace(',', '.')).toFixed(2)
     const saleValueRefactored =  parseFloat(saleValue.replace(',', '.')).toFixed(2)
 
     return (
         <View style={ [styles.container, theme === 'dark' && { backgroundColor: '#1E2733' }] }>
-            <Text style={ styles.name }>{ name.toUpperCase() }</Text>
+            <Text style={ [styles.name, variation[0] === '-' && { color: '#CD261C' }] }>{ name.toUpperCase() }</Text>
 
             <View style={ styles.values }>
                 {!isNaN(purchaseValueRefactored) && (
@@ -31,11 +32,21 @@ export const DolarType: React.FC = ({ name, purchaseValue, saleValue }: Props) =
                     </View>
                 )}
             </View>
+
+            <Text style={ [styles.variationText, variation[0] === '-' && { color: '#CD261C' }] }>
+                { variation[0] === '-' ? `${variation} % ↓` : `${variation} %  ↑` }
+            </Text>
         </View>
     )
 }
 
 const styles = StyleSheet.create({
+    variationText: {
+        color: '#00B982',
+        textAlign: 'center',
+        fontSize: 18,
+        fontWeight: '600'
+    },
     container: {
         padding: 20,
         backgroundColor: '#f3f3f3',

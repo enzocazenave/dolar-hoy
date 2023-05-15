@@ -102,10 +102,13 @@ export const App: React.FC = () => {
                     </ScrollView>
                 </View>
 
-                <ScrollView contentContainerStyle={ styles.values }>
+                <ScrollView 
+                    contentContainerStyle={ styles.values }
+                    showsVerticalScrollIndicator={ false }
+                >
                     { data.map((dollar) => { 
                         if (excludedDollars.includes(dollar.nombre)) return null
-                        if (dollar.show) return <DolarType key={ dollar.agencia } name={ dollar.nombre } purchaseValue={ dollar.compra } saleValue={ dollar.venta } />
+                        if (dollar.show) return <DolarType key={ dollar.agencia } name={ dollar.nombre } purchaseValue={ dollar.compra } saleValue={ dollar.venta } variation={ dollar.variacion } />
                     
                         return null
                     })}
