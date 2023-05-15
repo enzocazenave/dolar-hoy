@@ -1,12 +1,12 @@
 import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View, ActivityIndicator, Animated, useColorScheme } from 'react-native'
 import { DolarType } from './components/DolarType'
 import { useEffect, useState } from 'react'
-import { type Casa } from './types.d'
+import { type Dolar } from './types.d'
 
 const excludedDollars = ['Dolar', 'Argentina', 'Bitcoin', 'Dolar Soja']
 
 export const App: React.FC = () => {
-    const [data, setData] = useState<Casa[]>([])
+    const [data, setData] = useState<Dolar[]>([])
     const [loading, setLoading] = useState<boolean>(true)
     const [opacity] = useState<number>(new Animated.Value(0))
     const theme = useColorScheme<string>()
@@ -25,7 +25,7 @@ export const App: React.FC = () => {
         }
     }, [loading])
 
-    const toggleShow = (agencia: Casa.agencia): void => {
+    const toggleShow = (agencia: Dolar.agencia): void => {
         setData(prevState => prevState.map(dollar => {
             if (dollar.agencia !== agencia) return dollar
 
@@ -108,7 +108,17 @@ export const App: React.FC = () => {
                 >
                     { data.map((dollar) => { 
                         if (excludedDollars.includes(dollar.nombre)) return null
-                        if (dollar.show) return <DolarType key={ dollar.agencia } name={ dollar.nombre } purchaseValue={ dollar.compra } saleValue={ dollar.venta } variation={ dollar.variacion } />
+                        if (dollar.show) return (
+                            <DolarType 
+                                key={ dollar.agencia } 
+                                dolar={{
+                                    nombre: dollar.nombre,
+                                    compra: dollar.compra,
+                                    venta: dollar.venta,
+                                    variacion: dollar.variacion
+                                }}
+                            />
+                        )
                     
                         return null
                     })}

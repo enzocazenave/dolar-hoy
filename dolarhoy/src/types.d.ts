@@ -1,8 +1,8 @@
 export interface APIResults {
-    casa: Casa
+    dolars: Dolar[]
 }
 
-export interface Casa {
+export interface Dolar {
     compra:         string
     venta:          string
     agencia:        string
